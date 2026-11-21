@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: noor-quran
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn noor_quran:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/noor.db
+      - key: RENDER
+        value: true
+    disk:
+      name: noor-quran-data
+      mountPath: /var/data
+      sizeGB: 1
